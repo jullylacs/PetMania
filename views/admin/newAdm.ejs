@@ -1,0 +1,56 @@
+<section id="booking" class="booking">
+        <div class="container">
+            <h2 class="section-title">Marque seu horário e curta a experiência</h2>
+            <!-- Formulário de agendamento -->
+            <form action="/save" method="POST" id="bookingForm">
+                <div class="form-group">
+                    <label for="name">Nome Completo</label>
+                    <input type="text" id="name" name="name" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="check_in">Dia da visita</label>
+                    <input type="date" id="check_in" name="check_in" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="horario">Horário de preferência</label>
+                    <input type="time" id="horario" name="horario" required>
+                </div>
+    
+                <div class="form-group">
+                    <label for="pet_select">Pet</label>
+                    <select id="pet_select" name="room_type" required>
+                        <option value="">Selecione</option>
+                        <option value="Melissa">Melissa</option>
+                        <option value="Faísca">Faísca</option>
+                        <option value="Mary">Mary</option>
+                        <option value="Mel">Mel</option>
+                        <option value="Opala">Opala</option>
+                        <option value="Jack Daniels">Jack Daniels</option>
+                        <option value="Bolinha">Bolinha</option>
+                        <option value="Pinpi">Pinpi</option>
+                        <option value="Marina">Marina</option>
+                        <option value="Pingo">Pingo</option>
+                        <option value="Ninhada">Ninhada</option>
+                        <option value="Eliza">Eliza</option>
+                        <option value="Dominó">Dominó</option>
+                        <option value="Algodão">Algodão</option>
+                        <option value="Nervo">Nervo</option>
+                        <option value="Zé">Zé</option>
+                        <option value="Thor">Thor</option>
+                        <option value="Ninho">Ninho</option>
+                    </select>
+                </div>
+    
+                <div class="form-group">
+                    <button action="/save" method="POST" type="submit" class="btn">Enviar</button>
+                </div>
+            </form>
+        </div>
+    </section>

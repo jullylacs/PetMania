@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pagamento via cartão - PetMania</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto&family=Playfair+Display&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="shortcut icon" href="img/favicon.png" type="image/x-icon" />
+    <style>
+      /* Variáveis */
+      :root {
+        --primary-color: #66507b;
+        --secondary-color: #8777a7;
+        --accent-color: #bd9edc;
+        --text-color: #f2defe;
+        --bg-color: #fbf2ff;
+        --white: #ffffff;
+        --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s ease;
+        --input-bg: rgba(255 255 255 / 0.3);
+        --input-border: rgba(255 255 255 / 0.4);
+      }
+
+      /* Reset */
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Roboto', sans-serif;
+        line-height: 1.6;
+        color: var(--primary-color);
+        overflow-x: hidden;
+        position: relative;
+        background: var(--bg-color);
+      }
+
+      /* Fundo com blur */
+      body::before {
+        content: "";
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: url("img/fundo.jpg") no-repeat center center fixed;
+        background-size: cover;
+        filter: blur(8px) brightness(0.9);
+        z-index: -1;
+      }
+
+      h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', serif;
+      }
+
+      .container {
+        max-width: 700px;
+        width: 90%;
+        margin: 6rem auto 3rem;
+        padding: 2rem 2.5rem;
+        background-color: rgba(255 255 255 / 0.15);
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        color: var(--primary-color);
+      }
+
+      label {
+        font-weight: 600;
+        margin-bottom: 0.3rem;
+        display: block;
+      }
+
+      input[type="text"],
+      input[type="number"] {
+        padding: 0.8rem 1rem;
+        font-size: 1.1rem;
+        border-radius: 10px;
+        border: 1px solid var(--input-border);
+        background-color: var(--input-bg);
+        color: var(--primary-color);
+        transition: var(--transition);
+        width: 100%;
+      }
+
+      input[type="text"]:focus,
+      input[type="number"]:focus {
+        outline: none;
+        border-color: var(--accent-color);
+        box-shadow: 0 0 10px var(--accent-color);
+      }
+
+      .input-group {
+        display: flex;
+        gap: 1rem;
+      }
+
+      .input-group > div {
+        flex: 1;
+      }
+
+      .btn {
+        font-weight: 700;
+        text-align: center;
+        text-transform: uppercase;
+        color: var(--white);
+        padding: 15px 20px;
+        border: none;
+        border-radius: 10px;
+        box-shadow: 0px 0px 14px -7px var(--primary-color);
+        background-image: linear-gradient(
+          45deg,
+          var(--secondary-color) 0%,
+          var(--accent-color) 51%,
+          var(--text-color) 100%
+        );
+        background-size: 200% auto;
+        cursor: pointer;
+        user-select: none;
+        transition: var(--transition);
+        margin-top: 2rem;
+      }
+
+      .btn:hover {
+        background-position: right center;
+      }
+
+      .btn:active {
+        transform: scale(0.95);
+      }
+
+      /* Cartão visual */
+      .card-container {
+        margin-top: 3rem;
+        perspective: 1000px;
+        display: flex;
+        justify-content: center;
+      }
+
+      .card {
+        width: 320px;
+        height: 190px;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        background: var(--input-bg);
+        color: var(--primary-color);
+        font-family: 'Source Sans Pro', sans-serif;
+        padding: 1.5rem 2rem;
+        position: relative;
+        user-select: none;
+        transition: transform 0.6s;
+        transform-style: preserve-3d;
+        cursor: pointer;
+      }
+
+      .card-front,
+      .card-back {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        border-radius: 15px;
+        backface-visibility: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 1.5rem 2rem;
+      }
+
+      .card-front {
+        background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+        color: var(--white);
+      }
+
+      .card-back {
+        background: linear-gradient(135deg, var(--accent-color), var(--secondary-color));
+        color: var(--white);
+        transform: rotateY(180deg);
+        padding-top: 3rem;
+      }
+
+      .card .card-number {
+        font-size: 1.3rem;
+        letter-spacing: 3px;
+        font-weight: 600;
+      }
+
+      .card .card-holder,
+      .card .card-expiry {
+        font-size: 1rem;
+        opacity: 0.8;
+      }
+
+      .card .card-footer {
+        display: flex;
+        justify-content: space-between;
+        font-size: 0.9rem;
+        font-weight: 600;
+      }
+
+      .card.flipped {
+        transform: rotateY(180deg);
+      }
+
+      /* Responsivo */
+      @media (max-width: 600px) {
+        .container {
+          width: 95%;
+          margin: 4rem auto;
+          padding: 1.5rem 1.8rem;
+        }
+
+        .card-container {
+          margin-top: 2rem;
+        }
+
+        .card {
+          width: 280px;
+          height: 170px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Pagamento via Cartão</h1>
+      <form id="payment-form" autocomplete="off" novalidate>
+        <label for="card-number">Número do cartão</label>
+        <input
+          type="text"
+          id="card-number"
+          name="card-number"
+          maxlength="19"
+          placeholder="0000 0000 0000 0000"
+          autocomplete="off"
+          required
+        />
+
+        <label for="cardholder-name">Nome do titular</label>
+        <input
+          type="text"
+          id="cardholder-name"
+          name="cardholder-name"
+          maxlength="30"
+          placeholder="Nome do titular do cartão"
+          autocomplete="off"
+          required
+        />
+
+        <div class="input-group">
+          <div>
+            <label for="expiry">Validade</label>
+            <input
+              type="text"
+              id="expiry"
+              name="expiry"
+              maxlength="5"
+              placeholder="MM/AA"
+              autocomplete="off"
+              required
+            />
+          </div>
+
+          <div>
+            <label for="cvv">CVV</label>
+            <input
+              type="number"
+              id="cvv"
+              name="cvv"
+              maxlength="4"
+              placeholder="***"
+              autocomplete="off"
+              required
+            />
+          </div>
+        </div>
+
+        <button type="submit" class="btn" disabled>Transferir</button>
+      </form>
+
+      <div class="card-container" aria-label="Visualização do cartão de crédito">
+        <div class="card" id="card">
+          <div class="card-front">
+            <div class="card-number" id="card-number-display">0000 0000 0000 0000</div>
+            <div class="card-footer">
+              <span class="card-holder" id="card-holder-display">SEU NOME AQUI</span>
+              <span class="card-expiry" id="card-expiry-display">MM/AA</span>
+            </div>
+          </div>
+          <div class="card-back">
+            <div
+              class="cvv-display"
+              id="cvv-display"
+              style="text-align: right; padding-right: 1.5rem; font-weight: 600; font-size: 1.1rem;"
+            >
+              ***
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Elementos
+      const cardNumberInput = document.getElementById('card-number');
+      const cardHolderInput = document.getElementById('cardholder-name');
+      const expiryInput = document.getElementById('expiry');
+      const cvvInput = document.getElementById('cvv');
+      const submitBtn = document.querySelector('button[type="submit"]');
+      const card = document.getElementById('card');
+
+      const cardNumberDisplay = document.getElementById('card-number-display');
+      const cardHolderDisplay = document.getElementById('card-holder-display');
+      const cardExpiryDisplay = document.getElementById('card-expiry-display');
+      const cvvDisplay = document.getElementById('cvv-display');
+
+      // Máscara simples para número do cartão (ex: 0000 0000 0000 0000)
+      cardNumberInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '');
+        value = value.substring(0, 16);
+        let formattedValue = value.replace(/(.{4})/g, '$1 ').trim();
+        e.target.value = formattedValue;
+        cardNumberDisplay.textContent = formattedValue || '0000 0000 0000 0000';
+        checkFormValidity();
+      });
+
+      // Atualiza nome no cartão
+      cardHolderInput.addEventListener('input', (e) => {
+        let value = e.target.value.toUpperCase();
+        cardHolderDisplay.textContent = value || 'SEU NOME AQUI';
+        checkFormValidity();
+      });
+
+      // Máscara simples para validade MM/AA
+      expiryInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '').substring(0, 4);
+        if (value.length >= 3) {
+          value = value.replace(/^(\d{2})(\d{1,2})/, '$1/$2');
+        }
+        e.target.value = value;
+        cardExpiryDisplay.textContent = value || 'MM/AA';
+        checkFormValidity();
+      });
+
+      // Atualiza CVV e vira o cartão ao focar
+      cvvInput.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/\D/g, '').substring(0, 4);
+        e.target.value = value;
+        cvvDisplay.textContent = value.padEnd(3, '*');
+        checkFormValidity();
+      });
+
+      cvvInput.addEventListener('focus', () => {
+        card.classList.add('flipped');
+      });
+      cvvInput.addEventListener('blur', () => {
+        card.classList.remove('flipped');
+      });
+
+      // Habilitar botão quando todos os campos estiverem válidos
+      function checkFormValidity() {
+        const numberValid = cardNumberInput.value.replace(/\s/g, '').length === 16;
+        const nameValid = cardHolderInput.value.trim().length > 0;
+        const expiryValid = /^\d{2}\/\d{2}$/.test(expiryInput.value);
+        const cvvValid = cvvInput.value.length >= 3;
+
+        submitBtn.disabled = !(numberValid && nameValid && expiryValid && cvvValid);
+      }
+
+      // Previne envio do form, mostra alerta e redireciona
+      document.getElementById('payment-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+        alert('Pagamento realizado com sucesso!');
+        window.location.href = '/indexCompras';
+      });
+    </script>
+  </body>
+</html>

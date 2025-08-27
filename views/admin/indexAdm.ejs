@@ -1,0 +1,48 @@
+
+<div class="container">
+    <hr>
+    <h2>Cadastros</h2>
+    <hr>
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Dia De Visita</th>
+                <th>Horário De Visita</th>
+                <th>Pet</th>
+            </tr>
+        </thead>
+        <tbody>    
+            <% cadastros.forEach(cadastro => { %>
+
+            <tr>
+                    <td><%= cadastro.id %></td>
+                    <td><%= cadastro.nome %></td>
+                    <td><%= cadastro.email %></td>
+                    <td><%= cadastro.diaVisita %></td>
+                    <td><%= cadastro.horario %></td>
+                    <td><%= cadastro.pet %></td>
+                    <td>
+                        <!-- Aqui você pode colocar links deletar -->                        
+                        <form method="POST" action="/categories/delete" style="display:inline;" onsubmit="confirmarDelecao(event, this)">
+                            <input type="hidden" name="id" value="<%= cadastro.id %>">
+                            <button class="btn btn-danger">Deletar</button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<script>
+    function confirmarDelecao(event, form){
+        event.preventDefault();
+        var decision = confirm("Você quer deletar esta categoria?")
+        if(decision){
+            form.submit();
+        }
+    }
+</script>

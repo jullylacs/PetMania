@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" type="image/png" href="/img/logo.png">
+  <title>Forma De Pagamento Doações</title>
+  <div id="credits">Made by pan4o</div>
+
+<style>
+  *{
+  border: 0;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body{
+  height: 100%;
+  font-family: sans-serif;
+  background: #000;
+  #credits {position: fixed; bottom: 10px; right: 10px; color: black; font-size: 12px; font-family: Arial, sans-serif;}
+}
+
+.container{
+  align-items: flex-start;
+  display: flex;
+  min-height: 100%;
+  justify-content: center;
+  padding: 64px 24px;
+}
+
+.card-grid{
+  display: grid;
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+  max-width: 1200px;
+  width: 100%;
+}
+
+@media(min-width: 540px){
+  .card-grid{
+    grid-template-columns: repeat(2, 1fr); 
+  }
+}
+
+@media(min-width: 960px){
+  .card-grid{
+    grid-template-columns: repeat(4, 1fr); 
+  }
+}
+
+.card{
+  position: relative;
+}
+
+.card:before{
+  content: '';
+  display: block;
+  padding-bottom: 150%;
+  width: 100%;
+}
+
+.background{
+  background-position: center;
+  background-size: cover;
+  border-radius: 24px;
+  bottom: 0;
+  filter: brightness(0.75) saturate(1.2) 
+          contrast(0.85);
+  left: 0;
+  position: absolute;
+  right: 0;
+  top: 0;
+  transition: 
+    filter 200ms linear,
+    transform 200ms linear;
+}
+
+.card:hover .background{
+  transform: scale(1.05);
+  filter: none;
+}
+
+.card-grid:hover > .card:not(:hover) .background{
+  filter: brightness(0.6) saturate(1)
+          contrast(1.2)   blur(5px);
+}
+
+.card-grid:hover > .card:not(:hover) .content{
+  filter: brightness(0.8) blur(2px);
+}
+
+.content{
+  padding: 24px;
+  position: absolute;
+  top: 0;
+}
+
+.category{
+  color: #e1e1e1;
+  font-size: 0.9rem;
+  margin-bottom: 8px;
+  text-transform: uppercase;
+}
+
+.heading{
+  color: #e1e1e1;
+  font-size: 1.8rem;
+}                                         
+            
+</style>
+
+</head>
+
+<body>
+
+
+  
+  <section class="container">
+    <div class="card-grid">
+
+      <a class="card" href="/pixcompra">
+        <div class="background"
+          style="background-image: url(https://i.pinimg.com/736x/54/84/b4/5484b442424b41afcec569efe1d46a79.jpg)">
+        </div>
+        <div class="content">
+          <p class="category">Forma de pagamento</p>
+          <h3 class="heading">PIX</h3>
+        </div>
+      </a>
+      <a class="card" href="/animais">
+        <div class="background"
+          style="background-image: url(https://i.pinimg.com/736x/3b/0b/e0/3b0be05c7cc466275c6fcd5d2505259f.jpg)">
+        </div>
+        <div class="content">
+          <p class="category">Voltar</p>
+          <h3 class="heading">página inicial</h3>
+        </div>
+      </a>
+
+      <div>
+  </section>
+
+</body>
+
+</html>            

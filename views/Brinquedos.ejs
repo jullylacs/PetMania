@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Brinquedos e Acessórios | PetMania</title>
+  <link rel="shortcut icon" href="/img/logo.png" type="image/png">
+  
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #66507B;
+      --secondary-color: #8777A7;
+      --accent-color: #BD9EDC;
+      --text-color: #F2DEFE;
+      --bg-color: #FBF2FF;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+      overflow-x: hidden;
+    }
+
+    /* Fundo com blur */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('img/fundo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px) brightness(0.9);
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin: 140px 0 40px;
+      color: var(--primary-color);
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background-color: rgba(189, 158, 220, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Cards */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      margin: 12px 0;
+      object-fit: cover;
+    }
+
+    .card-button {
+      margin-top: 10px;
+      padding: 8px 18px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .card-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* Barra de progresso */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 100%;
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+      animation: progress linear;
+      animation-timeline: scroll();
+      transform-origin: left;
+    }
+
+    @keyframes progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      h1 {
+        margin-top: 160px;
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <a href="/" class="logo">PetMania</a>
+    <ul class="nav-links">
+      <li><a href="/indexCompras">Voltar</a></li>
+      <li><a href="/animais">Início</a></li>
+      <li><a href="/doacao">Doar</a></li>
+    </ul>
+  </header>
+
+  <!-- Barra de Progresso -->
+  <div class="progress-bar"></div>
+
+  <!-- Conteúdo -->
+  <h1>Brinquedos e Acessórios</h1>
+  <div class="card-container">
+    <div class="card">
+      <h2>Ratinhos de Varetinha</h2>
+      <h2>R$10,00</h2>
+      <img src="img/ratinhos.jpeg" alt="Ratinhos de Varetinha">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Ratinhos de Som</h2>
+      <h2>R$7,99</h2>
+      <img src="img/ratinhosBarulho.jpeg" alt="Ratinhos de Som">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Patinho de Pelúcia (com som)</h2>
+      <h2>R$25,90</h2>
+      <img src="img/patinho.jpeg" alt="Patinho de Pelúcia">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Cenourinha</h2>
+      <h2>R$12,00</h2>
+      <img src="img/cenourinha.jpeg" alt="Cenourinha">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Bolinha</h2>
+      <h2>R$6,50</h2>
+      <img src="img/bolinha.jpeg" alt="Bolinha">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Coleirinha</h2>
+      <h2>R$16,00</h2>
+      <img src="img/coleira.jpeg" alt="Coleirinha">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Correia para Passeios</h2>
+      <h2>R$29,99</h2>
+      <img src="img/correia.jpeg" alt="Correia">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Caixa de Transporte</h2>
+      <h2>R$48,00</h2>
+      <img src="img/caixa_transporte.jpeg" alt="Caixa de Transporte">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Bebedouro</h2>
+      <h2>R$58,90</h2>
+      <img src="img/bebedouro.jpeg" alt="Bebedouro">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+  </div>
+</body>
+</html>

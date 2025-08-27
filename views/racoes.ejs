@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Rações | PetMania</title>
+  <link rel="shortcut icon" href="/img/logo.png" type="image/png">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #66507B;
+      --secondary-color: #8777A7;
+      --accent-color: #BD9EDC;
+      --text-color: #F2DEFE;
+      --bg-color: #FBF2FF;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+      overflow-x: hidden;
+    }
+
+    /* Fundo com blur */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('img/fundo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px) brightness(0.9);
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin: 140px 0 40px;
+      color: var(--primary-color);
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+    h3 {
+      font-size: 0.9rem;
+      color: var(--primary-color);
+      text-align: center;
+    }
+
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background-color: rgba(189, 158, 220, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Cards */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      margin: 12px 0;
+      object-fit: cover;
+    }
+
+    .card-button {
+      margin-top: 10px;
+      padding: 8px 18px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .card-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* Barra de progresso */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 100%;
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+      animation: progress linear;
+      animation-timeline: scroll();
+      transform-origin: left;
+    }
+
+    @keyframes progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      h1 {
+        margin-top: 160px;
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="/" class="logo">PetMania</a>
+    <ul class="nav-links">
+      <li><a href="/indexCompras">Voltar</a></li>
+      <li><a href="/animais">Início</a></li>
+      <li><a href="/doacao">Doar</a></li>
+    </ul>
+  </header>
+
+  <!-- Barra de progresso -->
+  <div class="progress-bar"></div>
+
+  <!-- Conteúdo -->
+  <h1>Rações e Petiscos</h1>
+  <div class="card-container">
+
+    <div class="card">
+      <h2>Golden Natural Cães Raças Pequenas</h2>
+      <h2>R$90,80</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/302661-368-368/Racao-para-Caes-Adultos-Racas-Pequenas-Golden-Selecao-Natural-Abobora.jpg" alt="">
+      <h3>Nutrição saudável e sem corantes para cães de pequeno porte.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Fórmula Natural Fresh Meat 12kg</h2>
+      <h2>R$120,89</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1062039-368-368/Racao-Formula-Natural-Fresh-Meat-Caes-Adultos-Medio-Frango.png" alt="">
+      <h3>Ração premium com carne fresca, sem corantes, rica em nutrientes para a saúde e vitalidade de cães adultos.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Golden Natural Frango e Arroz</h2>
+      <h2>R$78,50</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/818716-368-368/racao-golden-selecao-natural-caes-adultos-frango-e-arroz-3kg.jpg" alt="">
+      <h3>Nutrição equilibrada, sem corantes, com frango e arroz de fácil digestão.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>GranPlus Menu Mini Carne e Arroz</h2>
+      <h2>R$49,99</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1037749-368-368/Menu-Caes-Adultos-Mini-Carne-e-Arroz-Frente.jpg" alt="">
+      <h3>Nutrição premium sem corantes, com carne e arroz para cães de pequeno porte.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Golden Special Gatos Frango e Carne</h2>
+      <h2>R$68,90</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1051462-368-368/Golden-Special-Frango-Carne-3kg.png" alt="">
+      <h3>Nutrição completa com frango e carne para gatos saudáveis e com pelagem brilhante.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>GranPlus Choice Gatos Frango e Carne</h2>
+      <h2>R$72,99</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1038013-368-368/Choice-Gatos-Adultos-Frango-e-Carne-Frente.jpg" alt="">
+      <h3>Nutrição balanceada e sem corantes, com frango e carne para gatos saudáveis e ativos.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Nero Premium Gatos Peixe e Frango</h2>
+      <h2>R$69,99</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1057044-368-368/racao-nero-premium-gatos-adultos-peixe-e-frango-frente.png" alt="">
+      <h3>Nutrição balanceada com peixe e frango, sem corantes, para gatos saudáveis e com pelagem brilhante.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Petisco Whiskas Carne 500g</h2>
+      <h2>R$20,50</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1064748-368-368" alt="">
+      <h3>Saborosa carne para agradar seu gato, sem corantes artificiais.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Funny Bunny Delícias da Horta</h2>
+      <h2>R$25,70</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/1062387-368-368/Racao-Funny-Bunny-18kg.png" alt="">
+      <h3>Petisco natural com vegetais frescos para roedores.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Ração Porquinho-da-Índia Megazoo</h2>
+      <h2>R$15,00</h2>
+      <img src="https://cobasi.vteximg.com.br/arquivos/ids/212068-368-368" alt="">
+      <h3>Nutrição balanceada e rica em fibras para porquinhos-da-índia saudáveis.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+  </div>
+
+</body>
+</html>

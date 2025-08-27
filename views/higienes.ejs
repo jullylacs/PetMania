@@ -1,0 +1,308 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Higiene | PetMania</title>
+  <link rel="shortcut icon" href="/img/logo.png" type="image/png">
+
+  <!-- Fontes -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+
+  <!-- Ícones -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+  <style>
+    :root {
+      --primary-color: #66507B;
+      --secondary-color: #8777A7;
+      --accent-color: #BD9EDC;
+      --text-color: #F2DEFE;
+      --bg-color: #FBF2FF;
+      --white: #ffffff;
+      --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--primary-color);
+      overflow-x: hidden;
+    }
+
+    /* Fundo com blur */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('img/fundo.jpg') no-repeat center center fixed;
+      background-size: cover;
+      filter: blur(8px) brightness(0.9);
+      z-index: -1;
+    }
+
+    h1 {
+      font-family: 'Playfair Display', serif;
+      text-align: center;
+      margin: 140px 0 40px;
+      color: var(--primary-color);
+    }
+
+    h2 {
+      font-size: 1.1rem;
+      color: var(--primary-color);
+    }
+
+    /* Header */
+    header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 1rem 2rem;
+      background-color: rgba(189, 158, 220, 0.7);
+      backdrop-filter: blur(8px);
+      box-shadow: var(--shadow);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.8rem;
+      color: var(--white);
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a {
+      color: var(--white);
+      text-decoration: none;
+      font-weight: 500;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      bottom: -5px;
+      left: 0;
+      background-color: var(--accent-color);
+      transition: var(--transition);
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Cards */
+    .card-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px 60px;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.25);
+      backdrop-filter: blur(10px);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: var(--shadow);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      transition: var(--transition);
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card img {
+      width: 100%;
+      max-width: 300px;
+      border-radius: 12px;
+      margin: 12px 0;
+      object-fit: cover;
+    }
+
+    .card-button {
+      margin-top: 10px;
+      padding: 8px 18px;
+      background-color: var(--primary-color);
+      color: var(--white);
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      text-decoration: none;
+      font-weight: 500;
+      transition: var(--transition);
+    }
+
+    .card-button:hover {
+      background-color: var(--secondary-color);
+    }
+
+    /* Barra de progresso */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 5px;
+      width: 100%;
+      background: linear-gradient(to right, var(--primary-color), var(--secondary-color), var(--accent-color));
+      animation: progress linear;
+      animation-timeline: scroll();
+      transform-origin: left;
+    }
+
+    @keyframes progress {
+      from {
+        transform: scaleX(0);
+      }
+      to {
+        transform: scaleX(1);
+      }
+    }
+
+    /* Responsivo */
+    @media (max-width: 600px) {
+      header {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .nav-links {
+        flex-direction: column;
+        gap: 1rem;
+      }
+
+      h1 {
+        margin-top: 160px;
+        font-size: 26px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header -->
+  <header>
+    <a href="/" class="logo">PetMania</a>
+    <ul class="nav-links">
+      <li><a href="/indexCompras">Voltar</a></li>
+      <li><a href="/animais">Início</a></li>
+      <li><a href="/doacao">Doar</a></li>
+    </ul>
+  </header>
+
+  <!-- Barra de progresso -->
+  <div class="progress-bar"></div>
+
+  <!-- Conteúdo -->
+  <h1>Higiene e Cuidados</h1>
+  <div class="card-container">
+
+    <div class="card">
+      <h2>Caixa de Areia</h2>
+      <h2>R$99,99</h2>
+      <img src="img/caixa_de_areia.jpeg" alt="Caixa de Areia">
+      <h3>Caixa de areia higiênica para gatos com bordas altas e proteção transparente contra respingos. Design moderno e funcional, ideal para manter o ambiente limpo. Acompanha pá coletora para facilitar a limpeza diária.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Fraldas</h2>
+      <h2>R$50,00</h2>
+      <img src="img/fraudas.jpeg" alt="Fraldas">
+      <h3>Faixa absorvente descartável Dog's Care para cães machos. Ideal para evitar sujeiras em ambientes internos, com alta absorção, material hipoalergênico e confortável. Tamanho G, indicado para cinturas de 52,2 a 62 cm. Embalagem com 6 unidades.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Escova de Pelos</h2>
+      <h2>R$47,00</h2>
+      <img src="img/escova_pelo.jpeg" alt="Escova de Pelos">
+      <h3>Escova recarregável via USB, ideal para gatos e cães. Com cerdas suaves e função de spray, facilita a remoção de pelos soltos e evita nós, proporcionando conforto e praticidade na escovação.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Esponja para Pets</h2>
+      <h2>R$20,00</h2>
+      <img src="img/esponja.jpeg" alt="Esponja">
+      <h3>Escova de banho para cães com cerdas macias, ideal para uma limpeza eficiente e confortável. Design ergonômico e antideslizante.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Colônia</h2>
+      <h2>R$38,90</h2>
+      <img src="img/colonia.jpeg" alt="Colônia">
+      <h3>Colônia para filhotes Sanol Dog Baby Lavender, com fragrância suave de lavanda. Fórmula biodegradável, sem parabenos e petrolatos, proporcionando um cuidado delicado e seguro para seu pet. Ideal para manter seu cãozinho cheiroso o dia todo.</h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Kit de Higiene</h2>
+      <h2>R$68,00</h2>
+      <img src="img/kit_higienico.jpeg" alt="Kit de Higiene">
+      <h3></h3>
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Shampoos</h2>
+      <h2>R$75,00</h2>
+      <img src="img/shampoo.jpeg" alt="Shampoo">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Remédios</h2>
+      <h2>R$42,90</h2>
+      <img src="img/remedio.jpeg" alt="Remédios">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Cortador de Unhas</h2>
+      <h2>R$20,00</h2>
+      <img src="img/cortador.jpeg" alt="Cortador de Unhas">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+    <div class="card">
+      <h2>Catador de Fezes</h2>
+      <h2>R$15,70</h2>
+      <img src="img/catador.jpeg" alt="Catador de Fezes">
+      <a class="card-button" href="/cadastro">Compre já!</a>
+    </div>
+
+  </div>
+
+</body>
+</html>
