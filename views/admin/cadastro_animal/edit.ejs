@@ -1,0 +1,24 @@
+<%- include ("../../partials/header.ejs") %>
+<%- include ("../../partials/navbar.ejs") %>
+
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Agendamento</h2>
+        </div>
+        <div class="card-body"></div>
+            <form method="POST" action="/cadastros_animais/update">
+                <input type="hidden" name="id" value="<%= cadastro.id %>">
+                <input class="form-control" type="text" name="nome" placeholder="Nome do visitante" value="<%= cadastro.nome %>"><br>
+                <input class="form-control" type="email" name="Email" placeholder="Email" value="<%= cadastro.Email %>"><br>
+                <input class="form-control" type="date" name="DiaVisita" placeholder="Data da visita" value="<%= cadastro.DiaVisita ? cadastro.DiaVisita.toISOString().slice(0,10) : '' %>"><br>
+                <input class="form-control" type="time" name="Hora" placeholder="Hora" value="<%= cadastro.Hora %>"><br>
+                <input class="form-control" type="text" name="Pet" placeholder="Nome do pet" value="<%= cadastro.Pet %>"><br>
+                <button class="btn btn-success">Atualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ("../../partials/footer.ejs") %>

@@ -1,0 +1,22 @@
+<%- include ("../../partials/header.ejs") %>
+<%- include ("../../partials/navbar.ejs") %>
+
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Usuário</h2>
+        </div>
+        <div class="card-body"></div>
+            <form method="POST" action="/cadastros/update">
+                <input type="hidden" name="id" value="<%= cadastro.id %>">
+                <input class="form-control" type="text" name="nome" placeholder="Defina o Nome" value="<%= cadastro.nome %>"><br>
+                <input class="form-control" type="email" name="email" placeholder="Defina o Email" value="<%= cadastro.email %>"><br>
+                <input class="form-control" type="text" name="senha" placeholder="Defina a Senha (deixe em branco para manter)"><br>
+                <button class="btn btn-success">Atualizar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ("../../partials/footer.ejs") %>

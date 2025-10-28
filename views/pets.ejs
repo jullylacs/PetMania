@@ -1,0 +1,173 @@
+<%- include('partials/header') %>
+<%- include('partials/navbar') %>
+
+<div class="hero-section animate-fade-in">
+    <div class="hero-content">
+        <h1>Nossos Amiguinhos</h1>
+        <p>Conheça os pets que estão esperando por um lar amoroso</p>
+    </div>
+</div>
+
+<div class="container">
+    <section class="pets-section py-5">
+        <div class="row">
+            <% if (pets && pets.length > 0) { %>
+                <% pets.forEach(pet => { %>
+                    <div class="col-md-4 mb-4">
+                        <div class="pet-card">
+                            <img src="<%= pet.imagem %>" alt="<%= pet.nome %>" class="card-img-top">
+                            <div class="card-body">
+                                <h5 class="card-title"><%= pet.nome %></h5>
+                                <p class="card-text"><%= pet.descricao %></p>
+                                <ul class="pet-info">
+                                    <li><i class="fas fa-paw"></i> Idade: <%= pet.idade %></li>
+                                    <li><i class="fas fa-venus-mars"></i> Sexo: <%= pet.sexo %></li>
+                                    <li><i class="fas fa-weight"></i> Porte: <%= pet.porte %></li>
+                                </ul>
+                                <div class="d-flex justify-content-between align-items-center mt-3">
+                                    <button class="btn btn-primary" onclick="openAdoptionModal('<%= pet.id %>')">
+                                        <i class="fas fa-heart"></i> Quero Adotar
+                                    </button>
+                                    <span class="pet-status <%= pet.status === 'Disponível' ? 'text-success' : 'text-danger' %>">
+                                        <i class="fas fa-circle"></i> <%= pet.status %>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <% }) %>
+            <% } else { %>
+                <div class="col-12 text-center">
+                    <div class="empty-state">
+                        <i class="fas fa-paw fa-3x mb-3"></i>
+                        <h3>Nenhum pet disponível no momento</h3>
+                        <p>Volte mais tarde para conhecer nossos novos amiguinhos!</p>
+                    </div>
+                </div>
+            <% } %>
+        </div>
+    </section>
+
+    <!-- Modal de Adoção -->
+    <div class="modal fade" id="adoptionModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Formulário de Adoção</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="adoptionForm" method="POST" action="/adotar">
+                        <input type="hidden" name="petId" id="petId">
+                        <div class="mb-3">
+                            <label for="nome" class="form-label">Nome Completo</label>
+                            <input type="text" class="form-control" id="nome" name="nome" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email</label>
+                            <input type="email" class="form-control" id="email" name="email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="telefone" class="form-label">Telefone</label>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="mensagem" class="form-label">Por que você quer adotar este pet?</label>
+                            <textarea class="form-control" id="mensagem" name="mensagem" rows="3" required></textarea>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input type="checkbox" class="form-check-input" id="termos" required>
+                            <label class="form-check-label" for="termos">
+                                Concordo com os termos de adoção responsável
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Enviar Pedido de Adoção</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Features Section -->
+<section class="features-section py-5 bg-light">
+    <div class="container">
+        <h2 class="text-center mb-5">Por que adotar conosco?</h2>
+        <div class="row g-4">
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-heart fa-3x text-primary mb-3"></i>
+                    <h3>Amor Garantido</h3>
+                    <p>Todos os nossos pets são carinhosos e prontos para dar e receber amor.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-stethoscope fa-3x text-primary mb-3"></i>
+                    <h3>Saúde em Dia</h3>
+                    <p>Pets vacinados e com acompanhamento veterinário completo.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="feature-card text-center p-4">
+                    <i class="fas fa-hands-helping fa-3x text-primary mb-3"></i>
+                    <h3>Suporte Contínuo</h3>
+                    <p>Acompanhamento pós-adoção para garantir a adaptação do pet.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Seção de Depoimentos -->
+<section class="testimonials-section py-5">
+    <div class="container">
+        <h2 class="text-center mb-5">Histórias de Sucesso</h2>
+        <div class="row">
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <img src="/img/testimonial-1.jpg" alt="Depoimento" class="img-fluid rounded-circle mx-auto d-block mb-3" style="width: 100px;">
+                    <p class="text-center">"Adotar a Luna foi a melhor decisão que já tomamos. Ela trouxe tanta alegria para nossa família!"</p>
+                    <p class="text-center text-muted">- Maria Silva</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <img src="/img/testimonial-2.jpg" alt="Depoimento" class="img-fluid rounded-circle mx-auto d-block mb-3" style="width: 100px;">
+                    <p class="text-center">"O processo de adoção foi super tranquilo e profissional. Hoje o Max é nossa alegria!"</p>
+                    <p class="text-center text-muted">- João Santos</p>
+                </div>
+            </div>
+            <div class="col-md-4 mb-4">
+                <div class="testimonial-card">
+                    <img src="/img/testimonial-3.jpg" alt="Depoimento" class="img-fluid rounded-circle mx-auto d-block mb-3" style="width: 100px;">
+                    <p class="text-center">"Adotar mudou minha vida. A Nina é a companheira mais fiel que eu poderia ter!"</p>
+                    <p class="text-center text-muted">- Ana Oliveira</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<%- include('partials/footer') %>
+
+<script>
+function openAdoptionModal(petId) {
+    document.getElementById('petId').value = petId;
+    new bootstrap.Modal(document.getElementById('adoptionModal')).show();
+}
+
+// Máscara para telefone
+document.getElementById('telefone').addEventListener('input', function (e) {
+    var x = e.target.value.replace(/\D/g, '').match(/(\d{0,2})(\d{0,5})(\d{0,4})/);
+    e.target.value = !x[2] ? x[1] : '(' + x[1] + ') ' + x[2] + (x[3] ? '-' + x[3] : '');
+});
+
+// Validação do formulário
+document.getElementById('adoptionForm').addEventListener('submit', function(e) {
+    if (!document.getElementById('termos').checked) {
+        e.preventDefault();
+        alert('Você precisa concordar com os termos de adoção responsável.');
+    }
+});
+</script>

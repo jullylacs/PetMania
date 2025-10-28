@@ -24,7 +24,4 @@ Animais.sync({ force: false }) // Não recriar a tabela se ela já existir
         console.error('Erro ao verificar a tabela animais:', err);
     });
 
-    Cadastro.hasMany(Animais);
-    Animais.belongsTo(Cadastro);
-
 module.exports = Animais;

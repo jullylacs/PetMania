@@ -1,0 +1,54 @@
+<%- include('../../partials/header') %>
+<%- include('../../partials/navbar') %>
+
+<div class="container mt-4">
+    <h2>Agendamentos de Visitas</h2>
+    <a href="/admin/agendamentos/new" class="btn btn-primary mb-3">Novo Agendamento</a>
+
+    <% if (messages.error) { %>
+        <div class="alert alert-danger"><%= messages.error %></div>
+    <% } %>
+    <% if (messages.success) { %>
+        <div class="alert alert-success"><%= messages.success %></div>
+    <% } %>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Data</th>
+                <th>Hora</th>
+                <th>Pet</th>
+                <th>Usuário</th>
+                <th>Status</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            <% agendamentos.forEach(agendamento => { %>
+                <tr>
+                    <td><%= new Date(agendamento.data).toLocaleDateString('pt-BR') %></td>
+                    <td><%= agendamento.hora %></td>
+                    <td><%= agendamento.Animal ? agendamento.Animal.nome : 'N/A' %></td>
+                    <td><%= agendamento.User ? agendamento.User.nome : 'N/A' %></td>
+                    <td>
+                        <span class="badge badge-<%= agendamento.status === 'confirmado' ? 'success' : 
+                            agendamento.status === 'pendente' ? 'warning' : 'danger' %>">
+                            <%= agendamento.status %>
+                        </span>
+                    </td>
+                    <td>
+                        <a href="/admin/agendamentos/edit/<%= agendamento.id %>" class="btn btn-info btn-sm">Editar</a>
+                        <form action="/agendamentos/delete" method="POST" style="display: inline;">
+                            <input type="hidden" name="id" value="<%= agendamento.id %>">
+                            <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este agendamento?')">
+                                Excluir
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+            <% }) %>
+        </tbody>
+    </table>
+</div>
+
+<%- include('../../partials/footer') %>

@@ -1,0 +1,23 @@
+<%- include ("../../partials/header.ejs") %>
+<%- include ("../../partials/navbar.ejs") %>
+
+<div class="container">
+    <hr>
+    <div class="card">
+        <div class="card-header">
+            <h2>Novo Agendamento de Visita</h2>
+        </div>
+        <div class="card-body"></div>
+            <form method="POST" action="/cadastros_animais/save">
+                <input class="form-control" type="text" name="nome" placeholder="Nome do visitante"><br>
+                <input class="form-control" type="email" name="Email" placeholder="Email"><br>
+                <input class="form-control" type="date" name="DiaVisita" placeholder="Data da visita"><br>
+                <input class="form-control" type="time" name="Hora" placeholder="Hora"><br>
+                <input class="form-control" type="text" name="Pet" placeholder="Nome do pet"><br>
+                <button class="btn btn-success">Cadastrar</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ("../../partials/footer.ejs") %>

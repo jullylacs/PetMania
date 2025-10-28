@@ -1,36 +1,33 @@
 const Sequelize = require("sequelize");
 const connection = require("../database/database");
 
-const Cadastro = connection.define("cadastros", {
-    nome:{
+const Cadastro = connection.define('cadastros', {
+    nome: {
         type: Sequelize.STRING,
         allowNull: false
     },
-    DiaVisita:{
-        type: Sequelize.DATE,
-        allowNull: false
-    },
-    Email:{
+    email: {
         type: Sequelize.STRING,
-        allowNull: false        
+        allowNull: false,
+        unique: true
     },
-    Hora:{
-        type: Sequelize.TIME,
-        allowNull: false
-    },
-        Pet:{
+    senha: {
         type: Sequelize.STRING,
         allowNull: false
     },
-})
+    role: {
+        type: Sequelize.ENUM('user', 'admin'),
+        allowNull: false,
+        defaultValue: 'user'
+    }
+});
 
-
-Cadastro.sync({ force: false }) // Não recriar a tabela se ela já existir
+Cadastro.sync({ force: false })
     .then(() => {
         console.log('Tabela "cadastros" verificada com sucesso!');
     })
     .catch((err) => {
-        console.error('Erro ao verificar a tabela cadastros:', err);
+        console.error('Erro ao verificar tabela cadastros:', err);
     });
 
 module.exports = Cadastro;
