@@ -5,7 +5,6 @@ const session = require('express-session');
 const bcrypt = require('bcryptjs');
 const flash = require('express-flash');
 const passport = require('passport');
-const LocalStrategy = require('passport-local').Strategy;
 const { ensureAuthenticated, ensureAdmin } = require('./config/auth');
 require('./config/passport')(passport);
 
@@ -22,88 +21,64 @@ const CadastroAnimaisController = require("./cadastro_animais/Cadastro_AnimaisCo
 // Configuração do upload de arquivos
 const multer = require('multer');
 const storage = multer.diskStorage({
-    destination: function (req, file, cb) {
-        cb(null, './public/uploads/')
-    },
-    filename: function (req, file, cb) {
+    destination: (req, file, cb) => cb(null, './public/uploads/'),
+    filename: (req, file, cb) => {
         const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
         cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
     }
 });
 const upload = multer({ 
-    storage: storage,
-    fileFilter: function (req, file, cb) {
-        // Aceitar apenas imagens
+    storage,
+    fileFilter: (req, file, cb) => {
         if (!file.originalname.match(/\.(jpg|jpeg|png|gif)$/)) {
             return cb(new Error('Apenas arquivos de imagem são permitidos!'), false);
         }
         cb(null, true);
     },
-    limits: {
-        fileSize: 5 * 1024 * 1024 // limite de 5MB
-    }
+    limits: { fileSize: 5 * 1024 * 1024 } // 5MB
 });
 
-app.use('/', CadastroController);
-app.use('/', AnimaisController);
-app.use('/', CadastroAnimaisController);
+// ---------------------- MIDDLEWARES ----------------------
 
-
-// Middleware Configuration
+// Configurações estáticas e parse de body
 app.use(express.static(path.join('public')));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+
+// Flash messages e sessão
 app.use(flash());
 app.use(session({
     secret: 'your-secret-key',
     resave: false,
     saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 // 24 hours
-    }
+    cookie: { maxAge: 1000 * 60 * 60 * 24 } // 24h
 }));
 
-// Passport Configuration
+// Passport
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Global Middleware
+// Middleware global - IMPORTANTE: deve vir antes das rotas!
 app.use((req, res, next) => {
-    res.locals.user = req.user;
+    res.locals.user = req.user || null; // garante que user nunca seja undefined
     res.locals.error = req.flash('error');
     res.locals.success = req.flash('success');
     next();
 });
 
-// Configurando o EJS como motor de visualização
+// ---------------------- VIEWS ----------------------
 app.set('view engine', 'ejs');
 app.set('views', './views');
 
-// Configuração do banco de dados
-const db = mysql.createConnection({
-  host: 'localhost',
-  user: 'root',
-  password: '1234',
-  database: 'happypet'
-});
+// ---------------------- CONTROLLERS ----------------------
+app.use('/', CadastroController);
+app.use('/', AnimaisController);
+app.use('/', CadastroAnimaisController);
 
-// Verificando a conexão com o banco
-db.connect(err => {
-  if (err) {
-    console.error('Erro de conexão com o banco de dados:', err);
-  } else {
-    console.log('Conexão com o banco de dados bem-sucedida!');
-  }
-});
+// ---------------------- ROTAS MANUAIS ----------------------
 
-
-////////////////ROTAS////////////////////
-
-// Rota principal (EJS)
-// Auth Routes
-app.get('/login', (req, res) => {
-    res.render('auth/login', { messages: req.flash() });
-});
+// Auth
+app.get('/login', (req, res) => res.render('auth/login', { messages: req.flash() }));
 
 app.post('/login', (req, res, next) => {
     passport.authenticate('local', {
@@ -113,9 +88,7 @@ app.post('/login', (req, res, next) => {
     })(req, res, next);
 });
 
-app.get('/register', (req, res) => {
-    res.render('auth/register', { messages: req.flash() });
-});
+app.get('/register', (req, res) => res.render('auth/register', { messages: req.flash() }));
 
 app.post('/register', async (req, res) => {
     try {
@@ -125,7 +98,6 @@ app.post('/register', async (req, res) => {
             return res.redirect('/register');
         }
 
-        // Verificar se o email já existe
         const existingUser = await Cadastro.findOne({ where: { email } });
         if (existingUser) {
             req.flash('error', 'Email já cadastrado');
@@ -144,8 +116,8 @@ app.post('/register', async (req, res) => {
 });
 
 app.get('/logout', (req, res, next) => {
-    req.logout((err) => {
-        if (err) { return next(err); }
+    req.logout(err => {
+        if (err) return next(err);
         res.redirect('/');
     });
 });
@@ -153,79 +125,44 @@ app.get('/logout', (req, res, next) => {
 // Main Routes
 app.get('/', async (req, res) => {
     try {
-        const pets = await Pet.findAll();
+        const pets = await Animais.findAll();
         res.render('index', { pets });
     } catch (error) {
-        console.error('Error fetching pets:', error);
+        console.error('Erro ao buscar pets:', error);
         res.render('index', { pets: [] });
     }
 });
 
-// Pet Routes
-app.get('/pets', async (req, res) => {
+// Páginas protegidas
+app.get('/formaPagamento', ensureAuthenticated, (req, res) => res.render('formaPagamento'));
+app.get('/pixCompra', ensureAuthenticated, (req, res) => res.render('pixCompra'));
+app.get('/doacao', ensureAuthenticated, (req, res) => res.render('doacao'));
+app.get('/card', ensureAuthenticated, (req, res) => res.render('card'));
+app.get('/cadastroCompras', ensureAuthenticated, (req, res) => res.render('cadastroCompras'));
+app.get('/indexCompras', ensureAuthenticated, (req, res) => res.render('indexCompras'));
+
+// Produtos
+['brinquedos','higienes','racoes','camas','decoracoes'].forEach(route => {
+    app.get(`/${route}`, ensureAuthenticated, (req, res) => res.render(route));
+});
+
+// ---------------------- DATABASE CONNECTION ----------------------
+async function connectDB() {
     try {
-        const pets = await Pet.findAll();
-        res.render('pets/index', { pets });
-    } catch (error) {
-        req.flash('error', 'Erro ao carregar os pets');
-        res.redirect('/');
+        const db = await mysql.createConnection({
+            host: 'localhost',
+            user: 'root',
+            password: '1234',
+            database: 'happypet'
+        });
+        console.log('Conexão com o banco de dados bem-sucedida!');
+        return db;
+    } catch (err) {
+        console.error('Erro de conexão com o banco de dados:', err);
     }
-});
+}
 
-app.get('/pets/:id', async (req, res) => {
-    try {
-        const pet = await Pet.findById(req.params.id);
-        res.render('pets/show', { pet });
-    } catch (error) {
-        req.flash('error', 'Pet não encontrado');
-        res.redirect('/pets');
-    }
-});
-
-// Rota para páginas de pagamento
-app.get('/formaPagamento', ensureAuthenticated, (req, res) => {
-  res.render('formaPagamento'); 
-}); //cards de forma de pagamento
-
-app.get('/pixCompra', ensureAuthenticated, (req, res) => {
-  res.render('pixCompra'); 
-}); //pix para compras
-
-app.get('/doacao', ensureAuthenticated, (req, res) => {
-  res.render('doacao'); 
-}); //pix para doações
-
-app.get('/card', ensureAuthenticated, (req, res) => {
-  res.render('card'); 
-}); //cartão de crédito/débito
-
-app.get('/cadastroCompras', ensureAuthenticated, (req, res) => {
-  res.render('cadastroCompras'); 
-}); //cadastro para proseguir com as compras
-
-app.get('/indexCompras', ensureAuthenticated, (req, res) => {
-  res.render('indexCompras'); 
-}); // Página de início das compras
-
-
-// Rotas para as páginas de produtos
-app.get('/brinquedos', ensureAuthenticated, (req, res) => {
-  res.render('brinquedos'); 
-});
-app.get('/higienes', ensureAuthenticated, (req, res) => {
-  res.render('higienes'); 
-});
-app.get('/racoes', ensureAuthenticated, (req, res) => {
-  res.render('racoes'); 
-});
-app.get('/camas', ensureAuthenticated, (req, res) => {
-  res.render('camas'); 
-});
-app.get('/decoracoes', ensureAuthenticated, (req, res) => {
-  res.render('decoracoes'); 
-});
-
-// Iniciando o servidor
+// ---------------------- START SERVER ----------------------
 app.listen(port, () => {
-  console.log(`localhost ${3000}`);
+    console.log(`Servidor rodando em http://localhost:${port}`);
 });

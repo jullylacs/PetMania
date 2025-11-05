@@ -233,6 +233,7 @@
     </style>
   </head>
   <body>
+        <%- include ("./partials/navbar.ejs") %>
     <div class="container">
       <h1>Pagamento via Cartão</h1>
       <form id="payment-form" autocomplete="off" novalidate>
@@ -310,7 +311,7 @@
         </div>
       </div>
     </div>
-
+        <%- include ("./partials/footer.ejs") %>
     <script>
       // Elementos
       const cardNumberInput = document.getElementById('card-number');

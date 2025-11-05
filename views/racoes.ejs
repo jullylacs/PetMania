@@ -218,14 +218,7 @@
 <body>
 
   <!-- Header -->
-  <header>
-    <a href="/" class="logo">PetMania</a>
-    <ul class="nav-links">
-      <li><a href="/indexCompras">Voltar</a></li>
-      <li><a href="/animais">Início</a></li>
-      <li><a href="/doacao">Doar</a></li>
-    </ul>
-  </header>
+    <%- include ("./partials/navbar.ejs") %>
 
   <!-- Barra de progresso -->
   <div class="progress-bar"></div>
@@ -315,6 +308,6 @@
     </div>
 
   </div>
-
+        <%- include ("./partials/footer.ejs") %>
 </body>
 </html>

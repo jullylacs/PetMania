@@ -268,20 +268,7 @@
 </head>
 <body>
 
-    <header>
-        <nav class="container">
-            <a href="/" class="logo">PetMania</a>
-            <ul class="nav-links">
-                <li><a href="/animais">Voltar</a></li>
-                <li><a href="/">Inicial</a></li>
-                <li><a href="/indexCompras">Compras</a></li>
-
-
-            </ul>
-            <div class="menu-toggle">☰</div>
-        </nav>
-    </header>
-
+        <%- include ("./partials/navbar.ejs") %>
   <section>
     <form id="pixForm" onsubmit="return false;">
       <h1>Doar</h1>
@@ -412,5 +399,6 @@
       campo.value = v;
     }
   </script>
+          <%- include ("./partials/footer.ejs") %>
 </body>
 </html>

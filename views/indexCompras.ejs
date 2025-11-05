@@ -295,17 +295,7 @@
 </head>
 
 <body>
-  <header>
-    <nav class="container">
-      <a href="/" class="logo">PetMania</a>
-      <ul class="nav-links">
-        <li><a href="/animais">Voltar</a></li>
-        <li><a href="/">Início</a></li>
-        <li><a href="/doacao">Doar</a></li>
-      </ul>
-      <div class="menu-toggle">☰</div>
-    </nav>
-  </header>
+    <%- include ("./partials/navbar.ejs") %>
 
   <!-- Cards -->
   <div class="cards">
@@ -351,15 +341,6 @@
   </div>
 
   <!-- Rodapé -->
-  <footer class="footer">
-    <div class="footer-content">
-      <p>&copy; 2025 <strong>PetMania</strong> - Todos os direitos reservados.</p>
-      <div class="social-icons">
-        <a href="https://facebook.com" target="_blank"><i class="fab fa-facebook-f"></i></a>
-        <a href="https://instagram.com" target="_blank"><i class="fab fa-instagram"></i></a>
-        <a href="https://twitter.com" target="_blank"><i class="fab fa-twitter"></i></a>
-      </div>
-    </div>
-  </footer>
+        <%- include ("./partials/footer.ejs") %>
 </body>
 </html>
