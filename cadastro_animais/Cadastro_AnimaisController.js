@@ -36,7 +36,8 @@ router.get("/admin/agendamentos/new", ensureAdmin, async (req, res) => {
 });
 
 // Salvar
-router.post("/agendamentos/save", ensureAdmin, async (req, res) => {
+// Rota atualizada: /admin/agendamentos/save
+router.post("/admin/agendamentos/save", ensureAdmin, async (req, res) => {
     const { userId, petId, data, hora } = req.body;
     if (!userId || !petId || !data || !hora) {
         req.flash('error', 'Todos os campos são obrigatórios');
@@ -76,7 +77,8 @@ router.get('/admin/agendamentos/edit/:id', ensureAdmin, async (req, res) => {
 });
 
 // Atualizar
-router.post('/agendamentos/update', ensureAdmin, async (req, res) => {
+// Rota atualizada: /admin/agendamentos/update
+router.post('/admin/agendamentos/update', ensureAdmin, async (req, res) => {
     const { id, userId, petId, data, hora, status } = req.body;
     if (!id || !userId || !petId || !data || !hora) {
         req.flash('error', 'Todos os campos são obrigatórios');
@@ -98,7 +100,8 @@ router.post('/agendamentos/update', ensureAdmin, async (req, res) => {
 });
 
 // Deletar
-router.post('/agendamentos/delete', ensureAdmin, async (req, res) => {
+// Rota atualizada: /admin/agendamentos/delete
+router.post('/admin/agendamentos/delete', ensureAdmin, async (req, res) => {
     const { id } = req.body;
     if (!id) {
         req.flash('error', 'ID do agendamento não fornecido');
