@@ -4,7 +4,7 @@
 <div class="container">
     <hr>
     <h2>Agendamentos de Animais</h2>
-    <a class="btn btn-success" href="/admin/cadastros_animais/new">Criar novo agendamento</a>
+    <a class="btn btn-success" href="/admin/cadastro_animal/new">Criar novo agendamento</a>
     <hr>
     <table class="table">
         <thead>
@@ -28,8 +28,8 @@
                     <td><%= c.DiaVisita ? c.DiaVisita.toISOString().slice(0,10) : '' %></td>
                     <td><%= c.Hora %></td>
                     <td>
-                        <a href="/admin/cadastros_animais/edit/<%= c.id %>" class="btn btn-warning btn-sm">Editar</a>
-                        <form method="POST" action="/cadastros_animais/delete" style="display:inline">
+                        <a href="/admin/cadastro_animal/edit/<%= c.id %>" class="btn btn-warning btn-sm">Editar</a>
+                        <form method="POST" action="/cadastro_animal/delete" style="display:inline">
                             <input type="hidden" name="id" value="<%= c.id %>">
                             <button class="btn btn-danger">Deletar</button>
                         </form>

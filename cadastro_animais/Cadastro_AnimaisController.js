@@ -2,11 +2,11 @@
 // Rota para listagem de cadasros
 // Rota para deletar um cadastro
 //acesso de ususarios
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const Agendamento = require("./Cadastro_Animais");
-const Animais = require("../animais/Animais");
-const { ensureAdmin } = require("../config/auth");
+const Agendamento = require('./Cadastro_Animais');
+const Animais = require('../animais/Animais');
+const { ensureAdmin } = require('../config/auth');
 
 // Admin: Listar agendamentos
 router.get("/admin/agendamentos", ensureAdmin, async (req, res) => {

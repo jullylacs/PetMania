@@ -1,0 +1,39 @@
+<%- include ("../../partials/header.ejs") %>
+<%- include ("../../partials/navbar.ejs") %>
+
+<div class="container mt-5">
+    <div class="card">
+        <div class="card-header">
+            <h2>Editar Animal</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="/admin/animaisAdd/update" enctype="multipart/form-data">
+                <input type="hidden" name="id" value="<%= animal.id %>">
+
+                <div class="mb-3">
+                    <label for="nome" class="form-label">Nome do Animal</label>
+                    <input class="form-control" type="text" name="nome" id="nome" value="<%= animal.nome %>" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="descricao" class="form-label">Descrição</label>
+                    <textarea class="form-control" name="descricao" id="descricao" required><%= animal.descricao %></textarea>
+                </div>
+
+                <div class="mb-3">
+                    <label for="imagem" class="form-label">Nova Imagem (opcional)</label>
+                    <input class="form-control" type="file" name="imagem" id="imagem">
+                    <% if (animal.imagem) { %>
+                        <p class="mt-2">Imagem atual: <img src="<%= animal.imagem %>" width="80" class="rounded"></p>
+                        <input type="hidden" name="imagemAntiga" value="<%= animal.imagem %>">
+                    <% } %>
+                </div>
+
+                <button class="btn btn-primary">Atualizar</button>
+                <a href="/admin/animaisAdd" class="btn btn-secondary">Voltar</a>
+            </form>
+        </div>
+    </div>
+</div>
+
+<%- include ("../../partials/footer.ejs") %>

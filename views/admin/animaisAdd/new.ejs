@@ -1,0 +1,63 @@
+<%- include("../../partials/header.ejs") %>
+<%- include("../../partials/navbar.ejs") %>
+
+<div class="container mt-5">
+  <div class="card shadow-lg border-0" style="background: rgba(255,255,255,0.1); backdrop-filter: blur(10px); border-radius: 16px;">
+    <div class="card-header text-center">
+      <h2 class="text-light">Cadastro de Animais</h2>
+    </div>
+
+    <div class="card-body">
+      <!-- Mensagens flash -->
+      <% if (error && error.length > 0) { %>
+        <div class="alert alert-danger"><%= error %></div>
+      <% } %>
+      <% if (success && success.length > 0) { %>
+        <div class="alert alert-success"><%= success %></div>
+      <% } %>
+
+      <!-- Formulário -->
+      <form action="/admin/animais/save" method="POST" enctype="multipart/form-data">
+        <div class="form-group mb-3">
+          <label for="nome" class="text-light">Nome do Animal:</label>
+          <input 
+            type="text" 
+            id="nome" 
+            name="nome" 
+            class="form-control" 
+            placeholder="Ex: Luna, Max, Thor..." 
+            required>
+        </div>
+
+        <div class="form-group mb-3">
+          <label for="descricao" class="text-light">Descrição:</label>
+          <textarea 
+            id="descricao" 
+            name="descricao" 
+            class="form-control" 
+            placeholder="Fale um pouco sobre o animal..." 
+            rows="4" 
+            required></textarea>
+        </div>
+
+        <div class="form-group mb-4">
+          <label for="imagem" class="text-light">Imagem do Animal:</label>
+          <input 
+            type="file" 
+            id="imagem" 
+            name="imagem" 
+            class="form-control" 
+            accept="image/*">
+        </div>
+
+        <button type="submit" class="btn btn-success w-100">Salvar</button>
+
+        <div class="text-center mt-3">
+          <a href="/admin/animaisAdd" class="text-light text-decoration-underline">← Voltar</a>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<%- include("../../partials/footer.ejs") %>
