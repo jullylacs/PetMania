@@ -71,9 +71,74 @@ app.set('view engine', 'ejs');
 app.set('views', './views');
 
 // ---------------------- CONTROLADORES ----------------------
-app.use('/', CadastroController);
-app.use('/', AnimaisController);
-app.use('/', CadastroAnimaisController);
+app.use('/racoes', CadastroController);
+app.use('/racoes', AnimaisController);
+app.use('/racoes', CadastroAnimaisController);
+
+
+app.use('/pixCompra', CadastroController);
+app.use('/pixCompra', AnimaisController);
+app.use('/pixCompra', CadastroAnimaisController);
+
+
+app.use('/pets', CadastroController);
+app.use('/pets', AnimaisController);
+app.use('/pets', CadastroAnimaisController);
+
+
+app.use('/indexCompras', CadastroController);
+app.use('/indexCompras', AnimaisController);
+app.use('/indexCompras', CadastroAnimaisController);
+
+
+app.use('/higienes', CadastroController);
+app.use('/higienes', AnimaisController);
+app.use('/higienes', CadastroAnimaisController);
+
+
+app.use('/formaPagamento', CadastroController);
+app.use('/formaPagamento', AnimaisController);
+app.use('/formaPagamento', CadastroAnimaisController);
+
+
+app.use('/doacaoPagamento', CadastroController);
+app.use('/doacaoPagamento', AnimaisController);
+app.use('/doacaoPagamento', CadastroAnimaisController);
+
+
+app.use('/doacao', CadastroController);
+app.use('/doacao', AnimaisController);
+app.use('/doacao', CadastroAnimaisController);
+
+
+app.use('/decoracao', CadastroController);
+app.use('/decoracao', AnimaisController);
+app.use('/decoracao', CadastroAnimaisController);
+
+
+app.use('/card', CadastroController);
+app.use('/card', AnimaisController);
+app.use('/card', CadastroAnimaisController);
+
+
+app.use('/camas', CadastroController);
+app.use('/camas', AnimaisController);
+app.use('/camas', CadastroAnimaisController);
+
+
+app.use('/cadastroCompras', CadastroController);
+app.use('/cadastroCompras', AnimaisController);
+app.use('/cadastroCompras', CadastroAnimaisController);
+
+
+app.use('/Brinquedos', CadastroController);
+app.use('/Brinquedos', AnimaisController);
+app.use('/Brinquedos', CadastroAnimaisController);
+
+
+app.use('/animais', CadastroController);
+app.use('/animais', AnimaisController);
+app.use('/animais', CadastroAnimaisController);
 
 // ---------------------- ROTAS DE AUTENTICAÇÃO ----------------------
 app.get('/login', (req, res) => res.render('auth/login', { messages: req.flash() }));

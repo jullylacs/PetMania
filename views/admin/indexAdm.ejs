@@ -1,47 +1,87 @@
+<div class="container my-4">
 
-<div class="container">
+    <!-- CABEÇALHO ADMIN -->
+    <div class="admin-header mb-4 p-3 d-flex justify-content-between align-items-center rounded shadow-sm"
+        style="background: var(--card-bg); backdrop-filter: blur(10px); border-left: 5px solid var(--primary-color);">
+
+        <h3 class="m-0">Painel Administrativo</h3>
+
+        <div class="d-flex gap-2">
+
+            <a href="/admin/usuario_cadastro" class="btn btn-primary">
+                Usuários
+            </a>
+
+            <a href="/admin/cadastro_animal" class="btn btn-primary">
+                Cadastro Animal
+            </a>
+
+            <a href="/admin/animaisAdd" class="btn btn-primary">
+                Animais
+            </a>
+
+            <a href="/admin/agendamento" class="btn btn-primary">
+                Agendamentos
+            </a>
+
+        </div>
+    </div>
+
+    <!-- TÍTULO DA PÁGINA -->
     <hr>
-    <h2>Cadastros</h2>
+    <h2>Coisas</h2>
     <hr>
-    <table class="table table-bordered">
-        <thead>
+
+    <!-- TABELA -->
+    <table class="table table-bordered table-striped align-middle text-center">
+
+        <thead class="table-dark">
             <tr>
                 <th>Id</th>
                 <th>Nome</th>
                 <th>Email</th>
                 <th>Dia De Visita</th>
-                <th>Horário De Visita</th>
+                <th>Horário</th>
                 <th>Pet</th>
+                <th>Ações</th>
             </tr>
         </thead>
-        <tbody>    
-            <% cadastros.forEach(cadastro => { %>
 
-            <tr>
+        <tbody>
+            <% cadastros.forEach(cadastro => { %>
+                <tr>
                     <td><%= cadastro.id %></td>
                     <td><%= cadastro.nome %></td>
                     <td><%= cadastro.email %></td>
                     <td><%= cadastro.diaVisita %></td>
                     <td><%= cadastro.horario %></td>
                     <td><%= cadastro.pet %></td>
+
                     <td>
-                        <!-- Aqui você pode colocar links deletar -->                        
-                        <form method="POST" action="/categories/delete" style="display:inline;" onsubmit="confirmarDelecao(event, this)">
+                        <form method="POST" action="/categories/delete" 
+                              style="display:inline;" 
+                              onsubmit="confirmarDelecao(event, this)">
+                            
                             <input type="hidden" name="id" value="<%= cadastro.id %>">
-                            <button class="btn btn-danger">Deletar</button>
+
+                            <button class="btn btn-danger btn-sm">
+                                Deletar
+                            </button>
                         </form>
                     </td>
                 </tr>
             <% }) %>
         </tbody>
+
     </table>
 </div>
 
+
 <script>
-    function confirmarDelecao(event, form){
+    function confirmarDelecao(event, form) {
         event.preventDefault();
-        var decision = confirm("Você quer deletar esta categoria?")
-        if(decision){
+
+        if (confirm("Você deseja realmente deletar este cadastro?")) {
             form.submit();
         }
     }
